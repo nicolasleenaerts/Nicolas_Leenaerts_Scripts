@@ -4,7 +4,7 @@ within_between_alpha <- function(data,participant){
   require(alpha)
   
   # Get between-person alpha
-  between_person_alpha = alpha(as.data.frame(lapply(select(data,-participant),as.numeric)))$total
+  between_person_alpha = alpha(as.data.frame(lapply(select(data,-participant),as.numeric)),check.keys=TRUE)$total
   
   # Get within-person alpha
   within_person_alphas = apply(unique(data[participant]),1,function(x){

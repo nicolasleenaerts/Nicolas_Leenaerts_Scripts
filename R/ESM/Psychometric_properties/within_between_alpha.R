@@ -34,5 +34,5 @@ within_between_alpha <- function(data,participant,check.keys=F){
 
 # Negative affect
 negative_affect_data <- my_data_ml[,c('Participant','affect_angstig','affect_eenzaam','affect_gestrest','affect_schuldig','affect_somber','affect_onzeker')]
-alpha_na <- within_between_alpha(negative_affect_data,'Participant',check.keys=F)
+alpha_na <- within_between_alpha(negative_affect_data,'Participant')
                                                         

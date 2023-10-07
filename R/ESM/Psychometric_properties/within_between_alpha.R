@@ -2,6 +2,7 @@ within_between_alpha <- function(data,participant){
   # Load libraries
   require(psych)
   require(alpha)
+  require(dplyr)
   
   # Get between-person alpha
   between_person_alpha = alpha(as.data.frame(lapply(select(data,-participant),as.numeric)),check.keys=TRUE)$total

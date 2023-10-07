@@ -1,18 +1,18 @@
-within_between_alpha <- function(data,participant){
+within_between_alpha <- function(data,participant,check.keys=F){
   # Load libraries
   require(psych)
   require(dplyr)
   
   # Get total data alpha (no averaging data for each participant)
-  total_alpha = alpha(as.data.frame(lapply(select(data,-participant),as.numeric)),check.keys=F)$total
+  total_alpha = alpha(as.data.frame(lapply(select(data,-participant),as.numeric)),check.keys=check.keys)$total
   
   # Get between-person alpha (after data is averaged for each participant)
-  between_person_alpha = alpha(as.data.frame(select(aggregate(lapply(select(data,-participant),as.numeric),by=data[participant],mean,na.rm=T),-participant)),check.keys=F)$total
+  between_person_alpha = alpha(as.data.frame(select(aggregate(lapply(select(data,-participant),as.numeric),by=data[participant],mean,na.rm=T),-participant)),check.keys=check.keys)$total
   
   # Get within-person alpha
   within_person_alphas = apply(unique(data[participant]),1,function(x){
     select(subset(data,data[participant]==x),-participant)
-    alpha(as.data.frame(lapply(select(subset(data,data[participant]==x),-participant),as.numeric)),check.keys=F)$total
+    alpha(as.data.frame(lapply(select(subset(data,data[participant]==x),-participant),as.numeric)),check.keys=check.keys)$total
   })
   
   # Create results
@@ -34,5 +34,5 @@ within_between_alpha <- function(data,participant){
 
 # Negative affect
 negative_affect_data <- my_data_ml[,c('Participant','affect_angstig','affect_eenzaam','affect_gestrest','affect_schuldig','affect_somber','affect_onzeker')]
-alpha_na <- within_between_alpha(negative_affect_data,'Participant')
+alpha_na <- within_between_alpha(negative_affect_data,'Participant',check.keys=F)
                                                         

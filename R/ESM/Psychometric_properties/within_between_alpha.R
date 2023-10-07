@@ -9,13 +9,13 @@ within_between_alpha <- function(data,participant,check.keys=F){
   # Get between-person alpha (after data is averaged for each participant)
   between_person_alpha = alpha(as.data.frame(select(aggregate(lapply(select(data,-participant),as.numeric),by=data[participant],mean,na.rm=T),-participant)),check.keys=check.keys)$total
   
-  # Get within-person alpha
+  # Get within-person alpha (on the data of each individual participant)
   within_person_alphas = apply(unique(data[participant]),1,function(x){
     select(subset(data,data[participant]==x),-participant)
     alpha(as.data.frame(lapply(select(subset(data,data[participant]==x),-participant),as.numeric)),check.keys=check.keys)$total
   })
   
-  # Create results
+  # Create results dataframe
   results = data.frame(matrix(nrow=4,ncol=length(between_person_alpha)+1))
   colnames(results) = c('type',colnames(between_person_alpha))
   
